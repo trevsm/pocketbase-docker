@@ -1,9 +1,9 @@
 FROM alpine:3.20 AS downloader
-ARG PB_VERSION=0.29.3
+ARG PB_VERSION=0.34.0-resend.2
 ARG PB_SHA256=""
 RUN apk add --no-cache curl unzip ca-certificates && update-ca-certificates
 WORKDIR /tmp/pb
-RUN curl -fsSL -o pocketbase.zip "https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip"
+RUN curl -fsSL -o pocketbase.zip "https://github.com/trevsm/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip"
 RUN if [ -n "$PB_SHA256" ]; then echo "${PB_SHA256} pocketbase.zip" | sha256sum -c - ; else echo "WARNING: PB_SHA256 not set, skipping checksum verification"; fi
 RUN unzip pocketbase.zip && chmod +x pocketbase && ./pocketbase --help >/dev/null 2>&1 || true
 
